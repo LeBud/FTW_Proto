@@ -238,19 +238,14 @@ void AGliderPawn::UpdateVelocity() {
 		ForwardCompensatedForce *= C_VelocityRestitution->GetFloatValue(ForwardSpeed);
 		
 		ForcesSum += UpDir * VerticalCompensatedForce + ForwardDir * ForwardCompensatedForce;
-		
-		//Sphere->AddForce(UpDir * VerticalCompensatedForce, "None", true);
-		//Sphere->AddForce(ForwardDir * ForwardCompensatedForce, "None", true);
 	}
 	
 	if (RightSpeed > SideMinThreshold){
 		SideCompensatedForce = -RightSpeed * SideVelocityRestitution;
-		//Sphere->AddForce(RightDir * SideCompensatedForce, "None", true);
 		ForcesSum += RightDir * SideCompensatedForce;
 	}
 	else if (LeftSpeed > SideMinThreshold) {
 		SideCompensatedForce = LeftSpeed * SideVelocityRestitution;
-		//Sphere->AddForce(RightDir * SideCompensatedForce, "None", true);
 		ForcesSum += RightDir * SideCompensatedForce;
 	}
 

@@ -97,6 +97,8 @@ protected:
 	float UpgradeDuration = 2.f;
 	UPROPERTY(EditAnywhere, Category="Upgrade")
 	float UpgradeThrusterForce = 200.f;
+
+	
 	
 	UPROPERTY(EditAnywhere, Category="Camera Settings")
 	UCurveFloat* C_TargetArmLenght;
