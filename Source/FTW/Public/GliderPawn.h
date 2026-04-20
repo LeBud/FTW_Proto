@@ -20,6 +20,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, Category="Show Debug")
+	bool bShowDebug;
+	
 	UPROPERTY(EditAnywhere, Category="Inputs")
 	UInputAction* LookAction;
 	UPROPERTY(EditAnywhere, Category="Inputs")
@@ -93,11 +96,10 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Velocity Correction")
 	UCurveFloat* C_YawCorrectionAmount;
 
-	UPROPERTY(EditAnywhere, Category="Upgrade")
+	UPROPERTY(EditAnywhere, Category="Upgrade Thruster")
 	float UpgradeDuration = 2.f;
-	UPROPERTY(EditAnywhere, Category="Upgrade")
+	UPROPERTY(EditAnywhere, Category="Upgrade Thruster")
 	float UpgradeThrusterForce = 200.f;
-
 	
 	
 	UPROPERTY(EditAnywhere, Category="Camera Settings")

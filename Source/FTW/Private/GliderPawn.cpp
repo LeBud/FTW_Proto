@@ -147,7 +147,7 @@ void AGliderPawn::Tick(float DeltaTime)
 		}
 	}
 	
-	if(GEngine)
+	if(GEngine && bShowDebug)
         GEngine->AddOnScreenDebugMessage(1, 15.0f, FColor::Orange,
         FString::Printf(TEXT("Forward Speed %f"), ForwardSpeed));
 }
@@ -165,6 +165,8 @@ void AGliderPawn::UpdateDrag() {
 	if (DragForce > DragMaxForce) DragForce = DragMaxForce;
 	
 	Sphere->AddForce(DragDir * DragForce, "None", true);
+	
+	if (!bShowDebug) return;
 	DrawDebugLine(GetWorld(), Sphere->GetComponentLocation(), Sphere->GetComponentLocation() + DragDir * DragForce, FColor::Blue);
 	if(GEngine)
     	GEngine->AddOnScreenDebugMessage(2, 15.0f, FColor::Blue,
@@ -186,6 +188,7 @@ void AGliderPawn::UpdateLift() {
 	
 	Sphere->AddForce(UpDir * LiftForce, "None", true);
 	
+	if (!bShowDebug) return;
 	DrawDebugLine(GetWorld(), Sphere->GetComponentLocation(), Sphere->GetComponentLocation() + UpDir * LiftForce * C_LiftSpeedEfficiency->GetFloatValue(ForwardSpeed), FColor::Green);
 	if(GEngine)
         	GEngine->AddOnScreenDebugMessage(3, 15.0f, FColor::Green,
@@ -251,6 +254,7 @@ void AGliderPawn::UpdateVelocity() {
 
 	Sphere->AddForce(ForcesSum, "None", true);
 
+	if (!bShowDebug) return;
 	DrawDebugLine(GetWorld(), Sphere->GetComponentLocation(), Sphere->GetComponentLocation() + UpDir * VerticalCompensatedForce, FColor::Red);
 	DrawDebugLine(GetWorld(), Sphere->GetComponentLocation(), Sphere->GetComponentLocation() + ForwardDir * ForwardCompensatedForce, FColor::Red);
 	DrawDebugLine(GetWorld(), Sphere->GetComponentLocation(), Sphere->GetComponentLocation() + RightDir * SideCompensatedForce, FColor::Yellow);
