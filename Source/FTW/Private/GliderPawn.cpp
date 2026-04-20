@@ -60,6 +60,7 @@ void AGliderPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		EnhancedInputComponent->BindAction(RollAction, ETriggerEvent::Triggered, this, &AGliderPawn::Roll);
 		EnhancedInputComponent->BindAction(PitchAction, ETriggerEvent::Triggered, this, &AGliderPawn::Pitch);
 		EnhancedInputComponent->BindAction(YawAction, ETriggerEvent::Triggered, this, &AGliderPawn::Yaw);
+		EnhancedInputComponent->BindAction(UpgradeAction, ETriggerEvent::Started, this, &AGliderPawn::UpgradeUse);
 	}
 	
 }
@@ -89,6 +90,12 @@ void AGliderPawn::Yaw(const FInputActionValue& Value) {
 	float value = Value.Get<float>();
 
 	Sphere->AddTorqueInDegrees(Sphere->GetUpVector() * value * YawSensibility, "None", true);
+}
+
+void AGliderPawn::UpgradeUse(const FInputActionValue& Value) {
+	if (bIsUsingUpgrade) return;
+	bIsUsingUpgrade = true;
+	UpgradeUseTimer = UpgradeDuration;
 }
 
 #pragma endregion InputsFunction
@@ -127,6 +134,12 @@ void AGliderPawn::Tick(float DeltaTime)
 	UpdateVelocity();
 	UpdateCamera();
 
+	if (bIsUsingUpgrade) {
+		UpgradeUseTimer -= DeltaTime;
+		if (UpgradeUseTimer <= 0) bIsUsingUpgrade = false;
+		Sphere->AddForce(ForwardDir * UpgradeThrusterForce, "None", true);
+	}
+	
 	if (bIsInCloudWind){
 		Sphere->AddForce(FVector::UpVector * 400.f, "None", true);
 		if (ForwardSpeed < ForwardMinThreshold) {

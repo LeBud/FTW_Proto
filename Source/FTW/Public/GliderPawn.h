@@ -28,6 +28,8 @@ protected:
 	UInputAction* PitchAction;
 	UPROPERTY(EditAnywhere, Category="Inputs")
 	UInputAction* YawAction;
+	UPROPERTY(EditAnywhere, Category="Inputs")
+	UInputAction* UpgradeAction;
 
 	UPROPERTY(EditAnywhere, Category="Rotation Sensibility")
 	float RollSensibility = 400.f;
@@ -90,7 +92,12 @@ protected:
 	UCurveFloat* C_PitchCorrectionAmount;
 	UPROPERTY(EditAnywhere, Category="Velocity Correction")
 	UCurveFloat* C_YawCorrectionAmount;
-    	
+
+	UPROPERTY(EditAnywhere, Category="Upgrade")
+	float UpgradeDuration = 2.f;
+	UPROPERTY(EditAnywhere, Category="Upgrade")
+	float UpgradeThrusterForce = 200.f;
+	
 	UPROPERTY(EditAnywhere, Category="Camera Settings")
 	UCurveFloat* C_TargetArmLenght;
 	UPROPERTY(EditAnywhere, Category="Camera Settings")
@@ -116,10 +123,15 @@ protected:
 	UPROPERTY()
 	bool bIsUsingController;
 
+	bool bIsUsingUpgrade;
+	float UpgradeUseTimer;
+	
+	
 	void CameraLook(const FInputActionValue& Value);
 	void Roll(const FInputActionValue& Value);
 	void Pitch(const FInputActionValue& Value);
 	void Yaw(const FInputActionValue& Value);
+	void UpgradeUse(const FInputActionValue& Value);
 
 	void UpdateDrag();
 	void UpdateLift();
